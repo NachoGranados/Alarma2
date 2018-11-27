@@ -208,6 +208,77 @@ void dar_informacion(string identificacion,string zona){ // Funcion que se utili
 	
 }
 
+void imprimir_zonas(string identificacion){ // Funcion que mostrara la lista de las zonas en pantalla.
+	
+	// Definicion de variables a utilizar.
+	ifstream archivo;
+	string nombre;
+	string linea;
+	string datos;
+	int cont = 0;
+	
+	// Apertura del archivo.
+	nombre = identificacion + "(Zonas).txt";
+	archivo.open(nombre.c_str(),ios::in);
+	
+	cout << "Zona		" << "Descripcion		" << "Dispositivo \n";
+	
+	while(!archivo.eof()){ // Iteracion que finaliza cuando se llega a la ultima linea del mismo.
+		
+		for (int i = 0; i < 3; i++){ // Iteracion que sirvira para agregar espacios al momento de imprimir la lista zonas.
+						
+			getline(archivo,linea);
+			
+			if(i == 2){
+				
+				cout << "	";
+				
+			}
+			
+			cout << linea << "		";
+					
+		}
+		
+		cout << "\n";
+		
+	}
+	
+}
+
+void crear_principal(string identificacion){ // Funcion que crea la contraseña por primera vez
+
+	// Definicion de variables a utilizar.
+	string nombre;
+	string principal;
+	ofstream archivo;
+		
+	// Creacion y edicion de archvo.
+	nombre = identificacion + "(Principal).txt";
+	archivo.open(nombre.c_str(),ios::out);
+	
+	cout << "Digite la contrasena principal que desea utilizar \n>>> ";
+	cin >> principal;
+	
+	archivo << principal;
+	
+	archivo.close();
+	
+	system("cls");
+		
+}
+
+void eliminar_principal(string identificacion){ // Funcion que actualiza la contraseña principal.
+	
+	// Definicion de variables a utilizar.
+	string nombre;
+	
+	nombre = identificacion + "(Principal).txt";
+	remove(nombre.c_str());
+	
+	crear_principal(identificacion);
+	
+}
+
 
 
 
