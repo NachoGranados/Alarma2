@@ -617,8 +617,104 @@ void actualizar_bitacora(string identificacion,string usuario,string alerta,stri
     
 }
 
+void imprimir_bitacora(string identificacion){ // Funcion que muestra la bitacora en pantalla.
+	
+	// Definicion de variables a utilizar.
+	string nombre;
+	string linea;
+	ifstream archivo;
+	bool guia = false;
+	
+	// Creacion y edicion de archvo.
+	nombre = identificacion + "(Bitacora).txt";
+	archivo.open(nombre.c_str(),ios::in);
+	
+	if(archivo.fail()){ // COndicion que vreirifaca si existen registros o no.
+		
+		cout << "Aun no existen registros \n \n";
+		
+	}else{
 
+		cout << "Fecha" << "		" << "Hora" << "		" << "Usuario" << "		" << "Alerta" << "		" << "Zona/Cod" << "	" << "Descripcion" << "\n";
+		
+		while(!archivo.eof()){ // Iteracion que finaliza cuando se llega a la ultima linea del mismo.
+			
+			if(guia == false){ // Condicion que servira para hacer un salto de linea un unica vez.
+				
+				getline(archivo,linea);
+				
+				guia = true;
+				
+			}
+			
+			for (int i = 0; i < 7; i++){ // Algoritmo que imprimira cada una de las lineas del archivo de en una manera ordenada.
+			
+				getline(archivo,linea);
+				
+				if(linea == "armar"){
+					
+					cout << "	";
+					
+					cout << linea;
+					
+					cout << "		";
+					
+					getline(archivo,linea);
+					
+					i++;
+					
+				}
+				
+				if(i == 3 or i == 5){ // Agregara espacios de ser necesario.
+					
+					cout << "	";
+					
+				}
+				
+				if(i != 6){
+					
+				cout << linea << "	";	
+					
+				}
+			
+			}
+		
+			cout << "\n";
+		
+		}	
+		
+	}
+	
+	archivo.close();
+	
+}
 
+string obtener_usuario(string identificacion){ // Funcion que buscara el usuario correspondiente.
+	
+	// Definicion de variables a utilizar.
+	string linea;
+	ifstream archivo;
+
+	// Creacion y edicion de archvo.
+	archivo.open("Usuarios.txt",ios::in);
+	
+	while(!archivo.eof()){ // Iteracion que finaliza cuando se llega a la ultima linea del mismo.
+	
+		getline(archivo,linea);
+		
+		if(linea == identificacion){ // Condicion que busca la identificacion para retornar el usuario.
+			
+			getline(archivo,linea);
+			
+			break;
+			
+		}
+	
+	}	
+	
+	return linea;
+	
+}
 
 int main(){
 	
