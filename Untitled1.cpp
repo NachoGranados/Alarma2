@@ -329,18 +329,123 @@ void dar_informacion(string identificacion){
 	
 }
 
+void monitorear(string identificacion){
 
+	// Definicion de variables a utilizar.
+	string linea;
+	ifstream archivo;
+	bool guia = false;
+	bool bandera = true;
+	int cont = 0;
+	int opcion;
+	
+	// Creacion y edicion de archvo.
+	archivo.open("Bitacora.txt",ios::in);
+	
+	if(archivo.fail()){
+		
+		 // Impresion en pantalla.
+		cout << "Aun no existen registros \n \n";
+		
+	}else{
+		
+		getline(archivo,linea);
+		
+		 // Impresion en pantalla.
+		cout << "Fecha" << "		" << "Hora" << "		" << "Usuario" << "		" << "Alerta" << "		" << "Zona/Cod" << "	" << "Descripcion" << "\n";
+		
+		do{
+			
+			while(!archivo.eof()){ // Iteracion que finaliza cuando se llega a la ultima linea del mismo.
+				
+				// Algoritmo que servira para imprimir todas las acciones de la bitacora en forma ordenada
+				for (int i = 0; i < 7; i++){
+				
+					getline(archivo,linea);
+					
+					if(linea == "armar"){
+						
+						cout << "	";// Impresion en pantalla.
+						
+						cout << linea;
+						
+						cout << "		";// Impresion en pantalla.
+						
+						getline(archivo,linea);
+						
+						i++;
+						
+					}
+					
+					if(i == 3 or i == 5){
+						
+						cout << "	";// Impresion en pantalla.
+						
+					}
+					
+					if(i != 6){
+						
+					cout << linea << "	";	// Impresion en pantalla.
+						
+					}
+				
+				}
+			
+				cout << "\n";// Impresion en pantalla.
+				
+				cont = cont + 1;
+				
+				if(cont > 14){
+					
+					break;
+					
+				}
+			
+			}
+			
+			 // Impresion en pantalla.
+			cout << "\n1- Siguientes Registros \n2- Actualizar Monitoreo \n3- Salir \n \n>>> ";
+			cin >> opcion;
+			
+			if(opcion == 1){
+				
+				system("cls");
+				
+				cont = 0;
+				
+				// Impresion en pantalla.
+				cout << "Fecha" << "		" << "Hora" << "		" << "Usuario" << "		" << "Alerta" << "		" << "Zona/Cod" << "	" << "Descripcion" << "\n";
+				
+			}
+			
+			if(opcion == 2){
+				
+				archivo.close();
+				
+				system("cls");
+				
+				bandera = false;
+				
+				monitorear(identificacion); // Llamada a la funcion
+				
+			}
+			
+			if(opcion == 3){
+				
+				bandera = false;
+				
+			}
 
+		}while(bandera == true);
+		
+	}
+	
+	archivo.close();
+	
+	system("cls");	
 
-
-
-
-
-
-
-
-
-
+}
+	
 int main(){
 	
 	do{
