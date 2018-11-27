@@ -92,6 +92,122 @@ void agregar_zona(string identificacion){ // Funcion que agrega una zona a la li
 		
 	}
 
+void eliminar(string identificacion,string opcion,string zona){ // Esta funcion se utiliza para eliminar las zonas establecidas.
+	
+	// Definicion de variables a utilizar.
+	ifstream archivo;
+	ifstream otro;
+	ofstream nuevo;
+	string guia;
+	string linea;
+	string datos;
+	string nombre;
+	
+	// Creacion y lectura de archvo.
+	nombre = identificacion + "(AD).txt";
+	otro.open(nombre.c_str(),ios::in);
+	
+	getline(otro,guia);
+	
+	otro.close();
+		
+	if(guia == "desarmado"){ // Condicion que determina si la zona esta armada o desarmada.
+		
+		// Apertura del archivo.
+		nombre = identificacion + "(Zonas).txt";
+		archivo.open(nombre.c_str(),ios::in);
+	
+		while(!archivo.eof()){ // Iteracion que finaliza cuando se llega a la ultima linea del mismo.
+		
+			getline(archivo,linea);
+			
+			if(linea != zona){ // Si la linea es diferente de la zona, entonces se concatenara a un string.
+				
+				datos = datos + linea + "\n";
+					
+			}else{
+				
+				for (int i = 0; i < 2; i++){ // Iteracion utilizada para eliminar las linea donde se encuentra la informacion de las zonas.
+					
+					getline(archivo,linea);
+				
+				}
+				
+			}
+				
+		}
+		
+		// Creacion y edicion de archvo.
+		nuevo.open(nombre.c_str(),ios::out);
+		nuevo << datos;
+		nuevo.close();
+		
+		if(opcion == "Si" or opcion == "si"){ // Condicion que determina si el usuario desea actualizar la informacion de la zona.
+			
+			agregar_zona(identificacion);
+			
+		}
+		
+	}else{
+		
+		cout << "No se puede eliminar la zona porque el sistema se encuentra armado \n \n";
+		
+	}
+		
+}
+
+void dar_informacion(string identificacion,string zona){ // Funcion que se utiliza para dar la informacion de cada zona.
+	
+	// Definicion de variables a utilizar.
+	ifstream archivo;
+	string linea;
+	string nombre;
+	string opcion;
+	
+	// Apertura del archivo.
+	nombre = identificacion + "(Zonas).txt";
+	archivo.open(nombre.c_str(),ios::in);
+	
+	while(!archivo.eof()){ // Iteracion que finaliza cuando se llega a la ultima linea del mismo.
+	
+		getline(archivo,linea);
+		
+		if(linea == zona){ // Si se encuentra la zona buscada, imprimira sus datos en pantalla.
+			
+			cout << "Identificacion del sistema de alarma: " << identificacion << "\n";
+				
+			cout << "Numero de zona: " << linea << "\n";
+			
+			zona = linea;
+			
+			getline(archivo,linea);
+			
+			cout << "Descripcion de la zona: " << linea << "\n";
+			
+			getline(archivo,linea);
+			
+			cout << "Dispositivo de proteccion instalado en la zona: " << linea << "\n \n";
+			
+		}
+	
+	}
+	
+	archivo.close();
+
+	cout << "Desea cambiar la informacion actual? (Si o No) \n>>> "; // Condicion que determina se se desea actualizar la informacion de la zona actual.
+	cin >> opcion;
+	cout << "\n";
+	
+	system("cls");
+
+	if(opcion == "Si" or opcion == "si"){
+	
+		eliminar(identificacion,opcion,zona);
+		
+	}
+	
+}
+
 
 
 
