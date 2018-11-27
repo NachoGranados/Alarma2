@@ -279,6 +279,95 @@ void eliminar_principal(string identificacion){ // Funcion que actualiza la cont
 	
 }
 
+void crear_secundarias(string identificacion){ // Funcion que crea las contraseñas secundarias.
+	
+	// Definicion de variables a utilizar.
+	string nombre;
+	string secundaria;
+	ofstream archivo;
+	
+	// Creacion y edicion de archvo.
+	nombre = identificacion + "(Secundarias).txt";
+	archivo.open(nombre.c_str(),ios::out);
+	
+	cout << "Digite la contrasena secundaria que desea agregar \n>>> ";
+	cin >> secundaria;
+	
+	archivo << secundaria << "\n";
+	
+	archivo.close();
+	
+	system("cls");	
+	
+}
+
+void agregar_secundarias(string identificacion){ // Funcion que agrega contraseñas secundarias.
+	
+	// Definicion de variables a utilizar.
+	string nombre;
+	string secundaria;
+	ofstream archivo;
+	
+	// Creacion y edicion de archvo.
+	nombre = identificacion + "(Secundarias).txt";
+	archivo.open(nombre.c_str(),ios::app);
+	
+	cout << "Digite la contrasena secundaria que desea agregar \n>>> ";
+	cin >> secundaria;
+	
+	archivo << secundaria << "\n";
+	
+	archivo.close();
+	
+	system("cls");
+
+}
+
+void eliminar_secundaria(string identificacion,string secundaria,string opcion){ // Funcion que elimina contraseñas secundarias.
+	
+	// Definicion de variables a utilizar.
+	string nombre;
+	string linea;
+	string datos;
+	ifstream archivo;
+	ofstream nuevo;
+	
+	// Creacion y edicion de archvo.
+	nombre = identificacion + "(Secundarias).txt";
+	archivo.open(nombre.c_str(),ios::in);
+
+	while(!archivo.eof()){ // Iteracion que finaliza cuando se llega a la ultima linea del mismo.
+	
+		getline(archivo,linea);
+		
+		if(linea != secundaria){ // Si la linea es diferente de la zona, entonces se concatenara a un string.
+			
+			datos = datos + linea + "\n";
+				
+		}else{
+				
+			getline(archivo,linea);
+			
+		}
+			
+	}
+
+	// Creacion y edicion de archvo.
+	nombre = identificacion + "(Secundarias).txt";
+	nuevo.open(nombre.c_str(),ios::out);
+	
+	nuevo << datos;
+	
+	nuevo.close();
+	
+	if(opcion == "Si" or opcion == "si"){ // Condicion que determina si el usuario desea actualizar la informacion de la zona.
+			
+		agregar_secundarias(identificacion);
+		
+	}
+	
+}
+
 
 
 
