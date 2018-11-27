@@ -7,6 +7,91 @@
 
 using namespace std;
 
+void crear_archivo(string identificacion){ // Esta funcion se utiliza para crear por primera vez el archivo que contendra las zonas estableciadas por el usuario.
+	
+	// Definicion de variables a utilizar.
+	string descripcion;
+	string dispositivo;
+	string nombre;
+	string zona;
+	ofstream archivo;
+	
+	// Impresiones en pantalla, junto con la respectiva asignacion de variables que se piden.				
+	cout << "Digite el numero de zona que desea agregar \n>>> ";
+	cin >> zona;
+	
+	system("cls");
+	
+	cout << "Digite la descripcion de la zona \n>>> ";
+	cin >> descripcion;	
+					
+	system("cls");
+	
+	cout << "Digite el dispositivo de proteccion instalado en la zona \n>>> ";
+	cin >> dispositivo;	
+	
+	// Creacion y edicion de archvo.
+	nombre = identificacion + "(Zonas).txt";
+	archivo.open(nombre.c_str(),ios::out);
+	archivo << zona << "\n" << descripcion << "\n" << dispositivo << "\n";
+	archivo.close();
+	
+	system("cls");
+	
+}
+
+void agregar_zona(string identificacion){ // Funcion que agrega una zona a la lista de zonas.
+	
+	// Definicion de variables a utilizar.
+	string descripcion;
+	string dispositivo;
+	string nombre;
+	string guia;
+	string zona;
+	ofstream archivo;
+	ifstream otro;
+
+	// Creacion y lectura de archvo.
+	nombre = identificacion + "(AD).txt";
+	otro.open(nombre.c_str(),ios::in);
+	
+	getline(otro,guia);
+	
+	otro.close();
+
+
+	if(guia == "desarmado"){ // Condicion que determina si la zona esta armada o desarmada.
+		
+		// Impresiones en pantalla, junto con la respectiva asignacion de variables que se piden.
+		cout << "Digite el numero de zona que desea agregar \n>>> ";
+		cin >> zona;
+		
+		system("cls");
+		
+		cout << "Digite la descripcion de la zona \n>>> ";
+		cin >> descripcion;	
+						
+		system("cls");
+		
+		cout << "Digite el dispositivo de proteccion instalado en la zona \n>>> ";
+		cin >> dispositivo;	
+		
+		// Creacion y edicion de archvo.
+		nombre = identificacion + "(Zonas).txt";
+		archivo.open(nombre.c_str(),ios::app);
+		archivo << zona << "\n" << descripcion << "\n" << dispositivo << "\n";
+		archivo.close();
+		
+		system("cls");
+			
+		}else{
+		
+			cout << "No se puede agregar la zona porque el sistema se encuentra armado \n \n";
+		
+		}
+		
+	}
+
 
 
 
