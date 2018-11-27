@@ -10,9 +10,142 @@
 
 using namespace std;
 
+void crear_archivo(string identificacion){
 
+	// Definicion de variables a utilizar.
+	string usuario;
+	string propiedad;
+	string direccion;
+	int telefono1;
+	int telefono2;
+	string correo;
+	string nombre;
+	ofstream archivo;
+	
+	 // Impresion en pantalla.
+	cout << "Su usuario no existe. Por favor cree uno \n \n";
+	
+	 // Impresion en pantalla.
+	cout << "Digite el nombre de usuario \n>>> ";
+	cin >> usuario;
+	
+	system("cls");
+	
+	 // Impresion en pantalla.
+	cout << "Digite el tipo de propiedad \n>>> ";
+	cin >> propiedad;
+	
+	system("cls");
+	
+	 // Impresion en pantalla.
+	cout << "Digite la direccion fisica \n>>> ";
+	cin >> direccion;
+	
+	system("cls");
+	
+	 // Impresion en pantalla.
+	cout << "Digite el primer telefono \n>>> ";
+	cin >> telefono1;
+	
+	system("cls");
+	
+	 // Impresion en pantalla.
+	cout << "Digite el segundo telefono \n>>> ";
+	cin >> telefono2;
+	
+	system("cls");
+	
+	 // Impresion en pantalla.
+	cout << "Digite el correo electronico \n>>> ";
+	cin >> correo;
+						
+	system("cls");
+	
+	// Creacion y edicion de archvo.
+	archivo.open("Usuarios.txt",ios::out);
+	archivo << identificacion << "\n" << usuario << "\n" << propiedad << "\n" << direccion << "\n" << telefono1 << "\n" << telefono2 << "\n" << correo << "\n";
+	archivo.close();
+	
+	// Creacion y edicion de archvo.
+	nombre = identificacion + "(estado).txt";
+	archivo.open(nombre.c_str(),ios::out);
+	archivo << "desactivado";
+	archivo.close();
+	
+	// Creacion y edicion de archvo.
+	nombre = identificacion + "(AD).txt";
+	archivo.open(nombre.c_str(),ios::out);
+	archivo << "desarmado";
+	archivo.close();
+	
+}
 
-
+void agregar_usuario(string identificacion){
+	
+	// Definicion de variables a utilizar.
+	string usuario;
+	string propiedad;
+	string direccion;
+	int telefono1;
+	int telefono2;
+	string correo;
+	ofstream archivo;
+	string nombre;
+	
+	 // Impresion en pantalla.		
+	cout << "Digite el nombre de usuario \n>>> ";
+	cin >> usuario;
+	
+	system("cls");
+	
+	 // Impresion en pantalla.
+	cout << "Digite el tipo de propiedad \n>>> ";
+	cin >> propiedad;
+	
+	system("cls");
+	
+	 // Impresion en pantalla.
+	cout << "Digite la direccion fisica \n>>> ";
+	cin >> direccion;
+	
+	system("cls");
+	
+	 // Impresion en pantalla.
+	cout << "Digite el primer telefono \n>>> ";
+	cin >> telefono1;
+	
+	system("cls");
+	
+	 // Impresion en pantalla.
+	cout << "Digite el segundo telefono \n>>> ";
+	cin >> telefono2;
+	
+	system("cls");
+	
+	 // Impresion en pantalla.
+	cout << "Digite el correo electronico \n>>> ";
+	cin >> correo;
+						
+	system("cls");
+	
+	// Creacion y edicion de archvo.
+	archivo.open("Usuarios.txt",ios::app);
+	archivo << identificacion << "\n" << usuario << "\n" << propiedad << "\n" << direccion << "\n" << telefono1 << "\n" << telefono2 << "\n" << correo << "\n";
+	archivo.close();
+	
+	// Creacion y edicion de archvo.
+	nombre = identificacion + "(estado).txt";
+	archivo.open(nombre.c_str(),ios::out);
+	archivo << "desactivado";
+	archivo.close();
+	
+	// Creacion y edicion de archvo.
+	nombre = identificacion + "(AD).txt";
+	archivo.open(nombre.c_str(),ios::out);
+	archivo << "desarmado";
+	archivo.close();
+	
+}
 
 
 
