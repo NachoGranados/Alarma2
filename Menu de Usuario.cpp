@@ -368,6 +368,255 @@ void eliminar_secundaria(string identificacion,string secundaria,string opcion){
 	
 }
 
+bool buscar_contrasena(string identificacion,string contrasena){ // Funcion que se utiliza para verificar si la contraseña digitada existe o no.
+	
+	// Definicion de variables a utilizar.
+	bool guia = false;
+	string nombre;
+	string linea;
+	ifstream principal;
+	ifstream secundarias;
+	
+	// Creacion y edicion de archvo.
+	nombre = identificacion + "(Principal).txt";
+	principal.open(nombre.c_str(),ios::in);	
+	
+	while(! principal.eof()){ // Iteracion que finaliza cuando se llega a la ultima linea del mismo.
+		
+		getline(principal,linea);
+		
+		if(linea == contrasena){ // Condicion que determina si la contraseña existe o no.
+			
+			guia = true;
+			
+			break;
+			
+		}
+		
+	}
+	
+	principal.close();
+
+	nombre = identificacion + "(Secundarias).txt";
+	secundarias.open(nombre.c_str(),ios::in);	
+	
+	while(! secundarias.eof()){ // Iteracion que finaliza cuando se llega a la ultima linea del mismo.
+		
+		getline(secundarias,linea);
+		
+		if(linea == contrasena){ // Condicion que determina si la contraseña existe o no.
+			
+			guia = true;
+			
+			break;
+			
+		}
+		
+	}
+	
+	secundarias.close();
+	
+	return guia;
+	
+}
+
+void crear_bitacora(string identificacion,string usuario,string alerta,string zona){ // Funcion que crear la bitacora por primera vez.
+	
+	// Definicion de variables a utilizar.
+	string nombre;
+	ofstream archivo;
+	string linea;
+	ifstream otro;
+	string fecha;
+	ifstream prueba;
+	ofstream bitacora;
+	string lugar;
+	
+	// Creacion y edicion de archvo.
+	nombre = identificacion + "(Zonas).txt";
+	otro.open(nombre.c_str(),ios::in);
+	
+	if(zona != "0"){
+		
+		while(! otro.eof())	{ // Iteracion que finaliza cuando se llega a la ultima linea del mismo.
+			
+			getline(otro,linea);
+			
+			if(linea == zona){ // Asignacion de la decripcion de la zona.
+				
+				getline(otro,linea);
+				
+				lugar = linea;
+				
+				break;
+				
+			}
+		
+		}		
+		
+	}else{
+		
+		linea = " ";
+		
+	}
+	
+	// Creacion y edicion de archvo.
+	nombre = identificacion + "(Bitacora).txt";
+	archivo.open(nombre.c_str(),ios::out);	
+	
+	// Utilizacion de la libreria de tiempo para poder obtener la fecha y la hora de la computadora.
+	time_t tiempo = time(NULL);
+    struct tm *actual = localtime(&tiempo);
+    char output[10];
+    strftime(output,10,"%d/%m/%y",actual);
+    
+	time_t tiempo_ahora;
+	time(&tiempo_ahora);
+	
+	struct tm *puntero = localtime(&tiempo_ahora);
+	
+	// Edicion del archivo.
+	archivo << "\n";
+	archivo << output << "\n";
+	archivo << puntero -> tm_hour << ":" << puntero -> tm_min << ":" << puntero -> tm_sec << "\n";
+	archivo << usuario << "\n";
+	archivo << alerta << "\n";
+	archivo << zona << "\n"; 
+	archivo << lugar;
+	
+    archivo.close();
+    
+    prueba.open("Bitacora.txt",ios::in);
+    
+	bitacora.open("Bitacora.txt",ios::out);
+	
+	// Edicion del archivo.
+	bitacora << "\n";
+	bitacora << output << "\n";
+	bitacora << puntero -> tm_hour << ":" << puntero -> tm_min << ":" << puntero -> tm_sec << "\n";
+	bitacora << usuario << "\n";
+	bitacora << alerta << "\n";
+	bitacora << zona << "\n"; 
+	bitacora << lugar;
+    
+    bitacora.close();
+    
+}
+
+void actualizar_bitacora(string identificacion,string usuario,string alerta,string zona){ // Funcion que agrega cualquier accion o alerta a la bitacora.
+
+	// Definicion de variables a utilizar.
+	string nombre;
+	ofstream nuevo;
+	string linea;
+	ifstream otro;
+	string fecha;
+	string palabras;
+	string datos;
+	ifstream bitacora;
+	ofstream bitacora_nueva;
+	string lugar;
+	
+	// Creacion y edicion de archvo.
+	nombre = identificacion + "(Zonas).txt";
+	otro.open(nombre.c_str(),ios::in);
+	
+	if(zona != "0"){
+		
+		while(! otro.eof())	{ // Iteracion que finaliza cuando se llega a la ultima linea del mismo.
+			
+			getline(otro,linea);
+			
+			if(linea == zona){ // Asignacion de la decripcion de la zona.
+				
+				getline(otro,linea);
+				
+				lugar = linea;
+				
+				break;
+				
+			}
+		
+		}		
+		
+	}else{
+		
+		linea = " ";
+		
+	}
+	
+	otro.close();
+	
+	// Creacion y edicion de archvo.
+	ifstream archivo;
+	
+	nombre = identificacion + "(Bitacora).txt";
+	archivo.open(nombre.c_str(),ios::in);	
+	
+	while(!archivo.eof()){ // Iteracion que finaliza cuando se llega a la ultima linea del mismo.
+	
+		getline(archivo,linea);
+		
+		datos = datos + linea + "\n"; // Se agrega cada linea del archivo a un string.
+	
+	}
+	
+	archivo.close();
+	
+	nombre = identificacion + "(Bitacora).txt";
+	nuevo.open(nombre.c_str(),ios::out);	
+	
+	// Utilizacion de la libreria de tiempo para poder obtener la fecha y la hora de la computadora.
+	time_t tiempo = time(NULL);
+    struct tm *actual = localtime(&tiempo);
+    char output[10];
+    strftime(output,10,"%d/%m/%y",actual);
+    
+	time_t tiempo_ahora;
+	time(&tiempo_ahora);
+	
+	struct tm *puntero = localtime(&tiempo_ahora);
+	
+	// Edicion del archivo.
+	nuevo << "\n";
+	nuevo << output << "\n";
+	nuevo << puntero -> tm_hour << ":" << puntero -> tm_min << ":" << puntero -> tm_sec << "\n";
+	nuevo << usuario << "\n";
+	nuevo << alerta << "\n";
+	nuevo << zona << "\n"; 
+	nuevo << lugar << "\n";
+	nuevo << datos;
+	
+    nuevo.close();
+	
+	bitacora.open("Bitacora.txt",ios::in);	
+	
+	while(!bitacora.eof()){ // Iteracion que finaliza cuando se llega a la ultima linea del mismo.
+	
+		getline(bitacora,linea);
+		
+		palabras = palabras + linea + "\n";
+	
+	}
+	
+	bitacora.close();
+    
+	bitacora_nueva.open("Bitacora.txt",ios::out);
+	
+	// Edicion del archivo.
+	bitacora_nueva << "\n";
+	bitacora_nueva << output << "\n";
+	bitacora_nueva << puntero -> tm_hour << ":" << puntero -> tm_min << ":" << puntero -> tm_sec << "\n";
+	bitacora_nueva << usuario << "\n";
+	bitacora_nueva << alerta << "\n";
+	bitacora_nueva << zona << "\n"; 
+	bitacora_nueva << lugar << "\n";
+	bitacora_nueva << palabras;
+    
+    bitacora_nueva.close();
+    
+}
+
 
 
 
